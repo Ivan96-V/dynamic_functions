@@ -47,8 +47,7 @@ function createPstore(textlabel, valueMin) {
 }
 
 function extraerNumeroDesdeElemento(elemento) {
-    let miElemento = document.getElementById(elemento);
-    let valor = miElemento.value;
+    let valor = elemento.value;
     // declaramos una variable para poder cambiar de un STR que seria la variable valor, para que sea una INT
     // declaremos otra variable: NumeroElemento que va a ser igual a un Number(), asi se cambia un STR a INT
     let NumeroElemento = Number(valor);
@@ -59,16 +58,18 @@ function extraerNumeroDesdeElemento(elemento) {
 function calcular() {
     //Creamos un array vacio para agregarle sus elementos luego
     let ventas = [];
+    // Creamos la variable para que funcione de contador para que pase por todo el array
+    let VentasPosicion = 0
+    // Variable que contiene el Id del DIV
+    let VentaElemento =  document.getElementById('itemStore');
 
-    // nombramos cada sucursal con la misma variable, solo le cambiamos su indice.
-    // para que se agregue automaticamente.
-    ventas[0] = extraerNumeroDesdeElemento('ventasTienda1');
-    ventas[1] = extraerNumeroDesdeElemento('ventasTienda2');
-    ventas[2] = extraerNumeroDesdeElemento('ventasTienda3');
-    ventas[3] = extraerNumeroDesdeElemento('ventasTienda4');
-    ventas[4] = extraerNumeroDesdeElemento('ventasTienda5');
-    ventas[5] = extraerNumeroDesdeElemento('ventasTienda6');
-
+    // hacer un FOR of loop para iterar justamente en el parrafo por eso usamos el index [1] que es input del ususario para calcular la suma
+    for (let itemVenta of VentaElemento.children) {
+        let valorVenta = extraerNumeroDesdeElemento(itemVenta.children[1]);
+        ventas[VentasPosicion] = valorVenta;
+        VentasPosicion = VentasPosicion + 1;
+    }
+    
     // llamamos a la funcion sumarTotales para ue sume el total de cada sucursal
     let totalVentas = sumarTotales(ventas);
     let textoSalida = 'Total de ventas: ' + totalVentas + ' | Venta mas alta: ' + ventaMaxima(ventas) + ' | Venta minima: ' + ventaMinima(ventas);
