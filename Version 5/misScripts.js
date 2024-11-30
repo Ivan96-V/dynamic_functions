@@ -37,10 +37,13 @@ function createPstore(textlabel, valueMin) {
     etiquetaInput.setAttribute('value', 0);
     // Crear el atrbuto MIN para que sea el valor minimo que tenga
     etiquetaInput.setAttribute('min', valueMin);
+    
+
 
     // agregar la etiqueta Label y la etiqueta Input al Parrafo
     etiquetaP.appendChild(etiquetaLabel);
     etiquetaP.appendChild(etiquetaInput);
+
 
     // Devolver la etiqueta <p> con <label> e <input>.
     return etiquetaP;
@@ -70,11 +73,33 @@ function calcular() {
         VentasPosicion = VentasPosicion + 1;
     }
     
-    // llamamos a la funcion sumarTotales para ue sume el total de cada sucursal
     let totalVentas = sumarTotales(ventas);
-    let textoSalida = 'Total de ventas: ' + totalVentas + ' | Venta mas alta: ' + ventaMaxima(ventas) + ' | Venta minima: ' + ventaMinima(ventas);
+    let ventaMayor = ventaMaxima(ventas);
+    let ventaBaja = ventaMinima(ventas);
 
-    document.getElementById('parrafoSalida').textContent = textoSalida;
+    for (itemSalida of VentaElemento.children) {
+        let usuarioEntrada = extraerNumeroDesdeElemento(itemSalida.children[1]);
+
+        itemSalida.children[1].className = 'regresarMayor';
+
+        if (usuarioEntrada == ventaMayor) {         
+            itemSalida.children[1].className = 'menuImputMayor';
+        }
+
+        if (usuarioEntrada == ventaBaja) {
+            itemSalida.children[1].className = 'menuImputMenor';
+        }
+
+    }
+
+
+    let mensajeSalida = 'Total de ventas: ' + totalVentas;
+
+    let elementoSalida = document.getElementById('parrafoSalida');
+
+    elementoSalida.textContent = mensajeSalida;
+
+    
 }
 
 // funcion para sumar de manera dinamica las ventas de cada sucursal.
